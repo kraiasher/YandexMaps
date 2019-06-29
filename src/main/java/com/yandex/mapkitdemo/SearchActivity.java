@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -39,7 +40,7 @@ public class SearchActivity extends Activity implements Session.SearchListener, 
      * Replace "your_api_key" with a valid developer key.
      * You can get it at the https://developer.tech.yandex.ru/ website.
      */
-    private final String MAPKIT_API_KEY = "your_api_key";
+    private final String MAPKIT_API_KEY = "c264b54c-7467-466c-bd8e-ceace5ee7bda";
 
     private MapView mapView;
     private EditText searchEdit;
@@ -113,6 +114,11 @@ public class SearchActivity extends Activity implements Session.SearchListener, 
                         ImageProvider.fromResource(this, R.drawable.search_result));
             }
         }
+        Point sso =  response.getCollection().getChildren().get(0).getObj().getGeometry().get(0).getPoint();
+        mapView.getMap().move(
+                new CameraPosition(sso, 14.0f, 0.0f, 0.0f),
+                new Animation(Animation.Type.SMOOTH, 5),
+                null);
     }
 
     @Override
@@ -133,8 +139,8 @@ public class SearchActivity extends Activity implements Session.SearchListener, 
             CameraPosition cameraPosition,
             CameraUpdateSource cameraUpdateSource,
             boolean finished) {
-        if (finished) {
-            submitQuery(searchEdit.getText().toString());
-        }
+        //if (finished) {
+           // submitQuery(searchEdit.getText().toString());
+        //}
     }
 }
